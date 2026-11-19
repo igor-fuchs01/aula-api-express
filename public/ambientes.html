@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambientes | Aula API</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body onload="validarSessao(); listarAmbientes()">
+    <header class="topo">
+        <h1>Aula <span>API</span> · Ambientes</h1>
+        <nav>
+            Olá, <b id="nome_usuario"></b>
+            <a href="#" onclick="limparSessao()">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- GET com query string: /ambientes/listar/:idUsuario?busca=... -->
+        <div class="card">
+            <div class="barra-busca">
+                <div style="flex:1">
+                    <label for="input_busca">Buscar ambiente pelo nome (query param)</label>
+                    <input id="input_busca" placeholder="ex.: estufa" onkeyup="if (event.key == 'Enter') listarAmbientes()">
+                </div>
+                <button onclick="listarAmbientes()">Buscar</button>
+                <button class="secundario" onclick="input_busca.value=''; listarAmbientes()">Limpar</button>
+            </div>
+        </div>
+
+        <div id="div_ambientes" class="grade"></div>
+
+        <!-- POST (novo) ou PUT (edição) -->
+        <div class="card" style="margin-top:24px">
+            <h2 id="h2_formulario">Novo ambiente</h2>
+            <input type="hidden" id="input_id">
+
+            <label for="input_nome">Nome</label>
+            <input id="input_nome">
+
+            <label for="input_descricao">Descrição</label>
+            <input id="input_descricao">
+
+            <div class="linha">
+                <div><label for="input_temp_min">Temp. mínima (°C)</label><input id="input_temp_min" type="number"></div>
+                <div><label for="input_temp_max">Temp. máxima (°C)</label><input id="input_temp_max" type="number"></div>
+                <div><label for="input_umid_min">Umid. mínima (%)</label><input id="input_umid_min" type="number"></div>
+                <div><label for="input_umid_max">Umid. máxima (%)</label><input id="input_umid_max" type="number"></div>
+            </div>
+
+            <button onclick="salvarAmbiente()">Salvar</button>
+            <button class="secundario" onclick="limparFormulario()">Cancelar</button>
+            <div id="div_mensagem" class="mensagem"></div>
+        </div>
+
+        <div class="card">
+            <h2>Requisições feitas por esta página</h2>
+            <div id="div_log" class="log-api"></div>
+        </div>
+    </main>
+
+    <script src="./js/sessao.js"></script>
+    <script src="./js/ambientes.js"></script>
+</body>
+</html>

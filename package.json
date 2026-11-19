@@ -1,0 +1,26 @@
+{
+  "name": "aula-api-express",
+  "version": "1.0.0",
+  "description": "Projeto didático: API REST com Node.js, Express e MySQL (routes, controllers, models) consumida pelo Postman e por páginas HTML.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon --exec node app.js",
+    "simular": "node simulador.js"
+  },
+  "nodemonConfig": {
+    "env": {
+      "NODE_ENV": "dev"
+    }
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

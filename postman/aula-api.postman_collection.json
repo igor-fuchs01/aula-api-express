@@ -1,0 +1,432 @@
+{
+  "info": {
+    "name": "Aula API - Express + MySQL",
+    "description": "Requisições da aula: métodos HTTP (GET, POST, PUT, DELETE) e tipos de parâmetro (params, query, body).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3333"
+    },
+    {
+      "key": "idUsuario",
+      "value": "1"
+    },
+    {
+      "key": "idAmbiente",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Usuários (POST + body)",
+      "item": [
+        {
+          "name": "Cadastrar usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/cadastrar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "cadastrar"
+              ]
+            },
+            "description": "201 criado · 400 campo faltando · 409 e-mail repetido",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nomeServer\": \"Aluno Teste\",\n  \"emailServer\": \"aluno@aula.com\",\n  \"senhaServer\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Autenticar (login)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/autenticar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "autenticar"
+              ]
+            },
+            "description": "200 OK · 403 e-mail/senha inválidos",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailServer\": \"professor@aula.com\",\n  \"senhaServer\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Erro 400 - sem senha",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/autenticar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "autenticar"
+              ]
+            },
+            "description": "Mostra a validação do controller",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailServer\": \"professor@aula.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Ambientes (CRUD)",
+      "item": [
+        {
+          "name": "GET listar (params)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/listar/{{idUsuario}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "listar",
+                "{{idUsuario}}"
+              ]
+            },
+            "description": "req.params.idUsuario"
+          }
+        },
+        {
+          "name": "GET listar com filtro (params + query)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/listar/{{idUsuario}}?busca=estufa",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "listar",
+                "{{idUsuario}}"
+              ],
+              "query": [
+                {
+                  "key": "busca",
+                  "value": "estufa",
+                  "description": "req.query.busca (opcional)"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "GET buscar por id (params)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/buscar/{{idAmbiente}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "buscar",
+                "{{idAmbiente}}"
+              ]
+            },
+            "description": "200 OK · 404 não encontrado"
+          }
+        },
+        {
+          "name": "POST cadastrar (body)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/cadastrar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "cadastrar"
+              ]
+            },
+            "description": "201 criado · devolve o idAmbiente",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Laboratório de Química\",\n  \"descricao\": \"Bloco B\",\n  \"temperaturaMin\": 18,\n  \"temperaturaMax\": 25,\n  \"umidadeMin\": 40,\n  \"umidadeMax\": 60,\n  \"fkUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST erro 400 (faixa inválida)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/cadastrar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "cadastrar"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste\",\n  \"temperaturaMin\": 30,\n  \"temperaturaMax\": 10,\n  \"umidadeMin\": 40,\n  \"umidadeMax\": 60,\n  \"fkUsuario\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "PUT editar (params + body)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/editar/{{idAmbiente}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "editar",
+                "{{idAmbiente}}"
+              ]
+            },
+            "description": "params = quem muda · body = o que muda",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Estufa de Morangos (editada)\",\n  \"descricao\": \"Setor A - reformada\",\n  \"temperaturaMin\": 17,\n  \"temperaturaMax\": 25,\n  \"umidadeMin\": 60,\n  \"umidadeMax\": 80\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "DELETE deletar (params)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ambientes/deletar/99",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ambientes",
+                "deletar",
+                "99"
+              ]
+            },
+            "description": "Troque 99 pelo id criado no POST · 404 se não existir"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Medidas",
+      "item": [
+        {
+          "name": "POST inserir medida (params + body)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/medidas/inserir/{{idAmbiente}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medidas",
+                "inserir",
+                "{{idAmbiente}}"
+              ]
+            },
+            "description": "Faz o papel do Arduino",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"temperatura\": 23.4,\n  \"umidade\": 68.9\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "GET últimas (params + query)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/medidas/ultimas/{{idAmbiente}}?limite=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medidas",
+                "ultimas",
+                "{{idAmbiente}}"
+              ],
+              "query": [
+                {
+                  "key": "limite",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "GET tempo real (params)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/medidas/tempo-real/{{idAmbiente}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medidas",
+                "tempo-real",
+                "{{idAmbiente}}"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "GET KPIs do dia (params)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/medidas/kpi/{{idAmbiente}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medidas",
+                "kpi",
+                "{{idAmbiente}}"
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Rota inexistente (404)",
+      "item": [
+        {
+          "name": "GET rota que não existe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    }
+  ]
+}

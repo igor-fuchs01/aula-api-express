@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Aula API</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body onload="validarSessao(); iniciarDashboard()">
+    <header class="topo">
+        <h1>Aula <span>API</span> · <span id="span_nome_ambiente">Dashboard</span></h1>
+        <nav>
+            <a href="./ambientes.html">Ambientes</a>
+            <a href="#" onclick="limparSessao()">Sair</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- GET /medidas/tempo-real/:idAmbiente (a cada 2s) e GET /medidas/kpi/:idAmbiente -->
+        <div class="kpis">
+            <div class="kpi"><span>Temperatura agora</span><strong id="kpi_temp_agora">--</strong></div>
+            <div class="kpi"><span>Umidade agora</span><strong id="kpi_umid_agora">--</strong></div>
+            <div class="kpi"><span>Média de hoje</span><strong id="kpi_media">--</strong></div>
+            <div class="kpi"><span>Mín / Máx hoje</span><strong id="kpi_min_max">--</strong></div>
+        </div>
+
+        <!-- GET /medidas/ultimas/:idAmbiente?limite=N -->
+        <div class="card">
+            <h2>Últimas medidas</h2>
+            <canvas id="grafico" height="90"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>Tabela (dados vindos da API)</h2>
+            <table>
+                <thead><tr><th>Horário</th><th>Temperatura (°C)</th><th>Umidade (%)</th></tr></thead>
+                <tbody id="tbody_medidas"></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Requisições feitas por esta página</h2>
+            <div id="div_log" class="log-api"></div>
+        </div>
+    </main>
+
+    <script src="./js/sessao.js"></script>
+    <script src="./js/dashboard.js"></script>
+</body>
+</html>
