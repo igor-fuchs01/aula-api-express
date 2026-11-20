@@ -9,6 +9,10 @@
 #
 # Cada requisição fica separada por ###
 # Linhas que começam com # são comentários
+
+// FAÇAM ISSO
+GET http://localhost:3333/teste/igor
+
 # ============================================================
 # USUÁRIOS
 # ============================================================

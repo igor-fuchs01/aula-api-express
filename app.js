@@ -15,6 +15,7 @@ var app = express();
 var usuarioRouter = require("./src/routes/usuarios");
 var ambienteRouter = require("./src/routes/ambientes");
 var medidaRouter = require("./src/routes/medidas");
+var testeRouter = require("./src/routes/teste");
 
 app.use(express.json());                          // lê o corpo (body) em JSON -> req.body
 app.use(express.urlencoded({ extended: false })); // lê o corpo de formulários HTML
@@ -24,6 +25,7 @@ app.use(cors());                                  // permite chamadas vindas de 
 app.use("/usuarios", usuarioRouter);
 app.use("/ambientes", ambienteRouter);
 app.use("/medidas", medidaRouter);
+app.use("/teste", testeRouter);
 
 // Qualquer rota que não existir cai aqui (404 = não encontrado)
 app.use(function (req, res) {
