@@ -2,6 +2,12 @@ DROP DATABASE IF EXISTS aula_api;
 CREATE DATABASE aula_api;
 USE aula_api;
 
+-- Usuário do MySQL usado pela API (é o mesmo que está nos arquivos .env e .env.dev)
+-- Assim ninguém precisa colocar a própria senha do MySQL no projeto.
+CREATE USER IF NOT EXISTS 'aluno_api'@'localhost' IDENTIFIED BY 'Aluno@123';
+GRANT ALL PRIVILEGES ON aula_api.* TO 'aluno_api'@'localhost';
+FLUSH PRIVILEGES;
+
 CREATE TABLE usuario (
     idUsuario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,

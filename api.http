@@ -1,0 +1,103 @@
+# ============================================================
+# TESTES DA API COM A EXTENSÃO "REST Client" (VS Code)
+#
+# Como usar:
+#   1. Instale a extensão "REST Client" no VS Code
+#   2. Inicie o servidor no terminal:  npm run dev
+#   3. Clique em "Send Request", que aparece em cima de cada requisição
+#   4. A resposta abre numa aba ao lado
+#
+# Cada requisição fica separada por ###
+# Linhas que começam com # são comentários
+# ============================================================
+# USUÁRIOS
+# ============================================================
+
+### Cadastrar um usuário
+POST http://localhost:3333/usuarios/cadastrar
+Content-Type: application/json
+
+{
+    "nomeServer": "Maria",
+    "emailServer": "maria@email.com",
+    "senhaServer": "123456"
+}
+
+### Fazer login (autenticar)
+POST http://localhost:3333/usuarios/autenticar
+Content-Type: application/json
+
+{
+    "emailServer": "maria@email.com",
+    "senhaServer": "123456"
+}
+
+
+# ============================================================
+# AMBIENTES
+# ============================================================
+
+### Listar os ambientes do usuário 1
+GET http://localhost:3333/ambientes/listar/1
+
+### Listar os ambientes do usuário 1 filtrando pelo nome
+GET http://localhost:3333/ambientes/listar/1?busca=estufa
+
+### Buscar o ambiente 1
+GET http://localhost:3333/ambientes/buscar/1
+
+### Cadastrar um ambiente para o usuário 1
+POST http://localhost:3333/ambientes/cadastrar
+Content-Type: application/json
+
+{
+    "nome": "Estufa",
+    "descricao": "Estufa de plantas",
+    "temperaturaMin": 18,
+    "temperaturaMax": 28,
+    "umidadeMin": 50,
+    "umidadeMax": 80,
+    "fkUsuario": 1
+}
+
+### Editar o ambiente 1
+PUT http://localhost:3333/ambientes/editar/1
+Content-Type: application/json
+
+{
+    "nome": "Estufa grande",
+    "descricao": "Estufa de plantas atualizada",
+    "temperaturaMin": 20,
+    "temperaturaMax": 30,
+    "umidadeMin": 55,
+    "umidadeMax": 85
+}
+
+### Deletar o ambiente 1
+DELETE http://localhost:3333/ambientes/deletar/1
+
+
+# ============================================================
+# MEDIDAS (leituras de temperatura e umidade)
+# ============================================================
+
+### Inserir uma leitura no ambiente 1
+POST http://localhost:3333/medidas/inserir/1
+Content-Type: application/json
+
+{
+    "temperatura": 24.5,
+    "umidade": 65
+}
+
+### Últimas leituras do ambiente 1 (padrão: 7)
+GET http://localhost:3333/medidas/ultimas/1
+
+### Últimas 10 leituras do ambiente 1
+GET http://localhost:3333/medidas/ultimas/1?limite=10
+
+### Leitura mais recente do ambiente 1
+GET http://localhost:3333/medidas/tempo-real/1
+
+### Mínimo, máximo e média de hoje do ambiente 1
+GET http://localhost:3333/medidas/kpi/1

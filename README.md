@@ -7,12 +7,13 @@ Tema: monitoramento de temperatura e umidade de ambientes (estufa, câmara fria,
 ## Como rodar
 
 ```bash
-# 1. Banco: execute src/database/script-tabelas.sql no MySQL Workbench
+# 1. Banco: execute src/database/script-tabelas.sql no MySQL Workbench (logado como root)
+#    O script também cria o usuário aluno_api, usado pela API
 
 # 2. Dependências
 npm install
 
-# 3. Configuração: copie .env.exemplo para .env.dev e coloque seu usuário/senha do MySQL
+# 3. Configuração: nada a fazer! Os arquivos .env e .env.dev já vêm prontos
 
 # 4. Servidor (com nodemon)
 npm run dev
